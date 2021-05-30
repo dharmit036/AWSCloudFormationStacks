@@ -10,20 +10,20 @@ Parameters:
 Mappings:
   ImageRef:
     AMILinux:
-      "ImageId": "ami-0d5eff06f840b45e9"
+      "ImageId": #Image Ids of the respective OS for ex. ami-123449
     Ubuntu20:
-      "ImageId": "ami-09e67e426f25ce0d7"
+      "ImageId": #Image Ids of the respective OS for ex. ami-123449
     Ubuntu18:
-      "ImageId": "ami-0747bdcabd34c712a"
+      "ImageId": #Image Ids of the respective OS for ex. ami-123449
 Resources:
   CFInstance02:
     Type: "AWS::EC2::Instance"
     Properties:
       SecurityGroups:
         - !Ref CFDemo2SG
-      KeyName: cfkey
+      KeyName: #Key-name
       ImageId: !FindInMap [ImageRef, !Ref EC2ImageName, ImageId]
-      InstanceType: "t2.micro"
+      InstanceType: "t2.micro" #ec2-instance type
       Tags:
         - Key: "Name"
           Value: "CF-demo-instance2"
