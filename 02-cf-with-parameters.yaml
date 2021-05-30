@@ -1,0 +1,41 @@
+Parameters:
+  EC2ImageName:
+    Description: "Enter OS type. Only Ubuntu20, Ubuntu18 and AMILinux are allowed"
+    Type: String
+    AllowedValues:
+      - Ubuntu20
+      - Ubuntu18
+      - AMILinux
+    Default: Ubuntu20
+Mappings:
+  ImageRef:
+    AMILinux:
+      "ImageId": "ami-0d5eff06f840b45e9"
+    Ubuntu20:
+      "ImageId": "ami-09e67e426f25ce0d7"
+    Ubuntu18:
+      "ImageId": "ami-0747bdcabd34c712a"
+Resources:
+  CFInstance02:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      SecurityGroups:
+        - !Ref CFDemo2SG
+      KeyName: cfkey
+      ImageId: !FindInMap [ImageRef, !Ref EC2ImageName, ImageId]
+      InstanceType: "t2.micro"
+      Tags:
+        - Key: "Name"
+          Value: "CF-demo-instance2"
+  CFDemo2SG:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "This SG is created by cloudformation"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: "22"
+          ToPort: "22"
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: "Name"
+          Value: "CF-demo-securityGroup2"
